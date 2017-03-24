@@ -28,7 +28,7 @@ module.exports = function(Gtrends) {
         for (var i = 0; i < data.length; i++) {
           respData.push(data[i].topic.type);
         }
-        cb(null, {"response": result});
+        cb(null, {"response": respData});
       })
       .catch(function(err){
         cb(null, err);
