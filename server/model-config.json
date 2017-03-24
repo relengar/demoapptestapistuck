@@ -35,5 +35,9 @@
   },
   "Note": {
     "dataSource": "db"
+  },
+  "gTrends": {
+    "dataSource": null,
+    "public": true
   }
 }
