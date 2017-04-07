@@ -2380,20 +2380,15 @@ paths:
           in: query
           required: false
           type: string
-      # parameters:
-      #   - name: filter
-      #     in: query
-      #     description: 'Filter defining fields, where, include, order, offset, and limit - must be a JSON-encoded string ({"something":"value"})'
-      #     required: false
-      #     type: string
-      #     format: JSON
+          format: JSON
       responses:
         '200':
           description: Request was successful
           schema:
-            type: array
-            items:
-              $ref: '#/definitions/gTrends'
+            type: object
+            properties:
+              greeting:
+                type: string
       deprecated: false
   /gTrends/replaceOrCreate:
     post:
@@ -2489,7 +2484,7 @@ paths:
       tags:
         - gTrends
       summary: 'Find a model instance by {{id}} from the data source.'
-      operationId: gTrends.findById
+      operationId: gTrends.getgoogle
       parameters:
         - name: id
           in: path
@@ -2608,7 +2603,7 @@ paths:
       tags:
         - gTrends
       summary: Find first instance of the model matched by filter from the data source.
-      operationId: gTrends.findOne
+      operationId: gTrends.getgoogle
       parameters:
         - name: filter
           in: query

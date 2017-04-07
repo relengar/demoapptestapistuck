@@ -14,7 +14,7 @@
   "relations": {},
   "acls": [],
   "methods": {
-    "find": {
+    "getgoogle": {
       "isStatic": true,
       "accepts": [
         {
@@ -27,6 +27,25 @@
       ],
       "returns": {
         "arg": "greeting",
+        "type": "string"
+      },
+      "http": {
+        "verb": "get"
+      }
+    },
+    "findOne": {
+      "isStatic": true,
+      "accepts": [
+        {
+          "arg": "param",
+          "type": "string",
+          "http": {
+            "source": "query"
+          }
+        }
+      ],
+      "returns": {
+        "arg": "result",
         "type": "string"
       },
       "http": {
