@@ -7,7 +7,6 @@ var loopback = require("loopback");
 
 module.exports = function(Gtrends) {
   Gtrends.find = function(msg, cb) {
-    // msg = loopback.getCurrentContext();
     msg = msg ? msg.content : 'ibm';
     // googleTrends.interestOverTime({keyword: msg})
     // .then(function(result){
@@ -20,9 +19,9 @@ module.exports = function(Gtrends) {
     googleTrends.relatedTopics({keyword: msg})
     .then(function(result){
       var respData = [];
-      var data = JSON.parse(result).default.rankedList[0].rankedKeyword;
+      var data = JSON.parse(result).default.rankedList[1].rankedKeyword;
       for (var i = 0; i < data.length; i++) {
-        respData.push({"description" : data[i].topic.type, "title" : data[i].topic.title, "location" : "None", "link" : data[i].link, "date" : "2012-11-03T07:00:00"});
+        respData.push({"description" : data[i].topic.title + " - " + data[i].topic.type, "title" : data[i].topic.type, "location" : "None", "link" : data[i].link, "date" : "2012-11-03T07:00:00"});
       }
       cb(null, respData);
     })
@@ -41,16 +40,4 @@ module.exports = function(Gtrends) {
     returns: {arg: 'greeting', type: 'string'}
   });
 
-  // Gtrends.setup = function() {
-  //   Gtrends.base.setup.apply(this, arguments);
-  //
-  //   this.remoteMethod('nearby', {
-  //     description: 'Find nearby locations around the geo point',
-  //     accepts: [{arg: 'msg', type: 'string'}],
-  //     returns: {arg: 'greeting', type: 'string'},
-  //     http: { verb: 'GET' }
-  //   });
-  // };
-  //
-  // Gtrends.setup();
 };
