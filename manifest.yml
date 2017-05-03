@@ -6,5 +6,3 @@ applications:
   name: demoapptestapistuck
   host: demoapptestapistuck
   disk_quota: 1024M
-  services:
-  - API Connect-k2
