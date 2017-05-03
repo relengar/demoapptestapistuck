@@ -21,7 +21,8 @@ module.exports = function(Gtrends) {
       var respData = [];
       var data = JSON.parse(result).default.rankedList[1].rankedKeyword;
       for (var i = 0; i < data.length; i++) {
-        respData.push({"description" : data[i].topic.title + " - " + data[i].topic.type, "title" : data[i].topic.type, "location" : "None", "link" : data[i].link, "date" : "2012-11-03T07:00:00"});
+        respData.push({"description" : data[i].topic.title + " - " + data[i].topic.type, "title" : data[i].topic.type, "location" : "item", "link" : data[i].link, "date" : "2012-11-03T07:00:00"});
+        respData.push({"description" : data[i].formattedValue, "title" : data[i].topic.type, "location" : "raising", "link" : data[i].link, "date" : "2012-11-03T07:00:00"});
       }
       cb(null, respData);
     })
