@@ -7,21 +7,25 @@ module.exports = function(Gtrends) {
     var args = {};
     var startDate;
     var endDate;
-    args.keyword = msg.content ? msg.content : 'ibm';
-    if (msg.startYear && msg.startMonth && msg.startDay) {
-      startDate = new Date(msg.startYear +"-"+ msg.startMonth +"-"+ msg.startDay);
-    }
-    if (msg.endYear && msg.endMonth && msg.endDay) {
-      endDate = new Date(msg.endYear +"-"+ msg.endMonth +"-"+ msg.endDay);
-    }
+    if (msg) {
+      args.keyword = msg.content ? msg.content : 'ibm';
+      if (msg.startYear && msg.startMonth && msg.startDay) {
+        startDate = new Date(msg.startYear +"-"+ msg.startMonth +"-"+ msg.startDay);
+      }
+      if (msg.endYear && msg.endMonth && msg.endDay) {
+        endDate = new Date(msg.endYear +"-"+ msg.endMonth +"-"+ msg.endDay);
+      }
 
-    if (startDate && startDate.toString() !== "Invalid Date") {
-      args.startTime = startDate;
+      if (startDate && startDate.toString() !== "Invalid Date") {
+        args.startTime = startDate;
+      }
+      if (endDate && endDate.toString() !== "Invalid Date") {
+        args.endTime = endDate;
+      }
     }
-    if (endDate && endDate.toString() !== "Invalid Date") {
-      args.endTime = endDate;
+    else {
+      args.keyword = "ibm";
     }
-
     googleTrends.relatedTopics(args)
     .then(function(result){
       var respData = [];
