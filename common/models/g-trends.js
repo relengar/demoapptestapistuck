@@ -1,22 +1,28 @@
 'use strict';
 
-
-var request = require("request");
 const googleTrends = require('google-trends-api');
-var loopback = require("loopback");
 
 module.exports = function(Gtrends) {
   Gtrends.find = function(msg, cb) {
-    msg = msg ? msg.content : 'ibm';
-    // googleTrends.interestOverTime({keyword: msg})
-    // .then(function(result){
-    //   cb(null, result);
-    // })
-    // .catch(function(err){
-    //   cb(null, err);
-    // });
-    // cb(null, "the message is " + msg);
-    googleTrends.relatedTopics({keyword: msg})
+    var args = {};
+    var startDate;
+    var endDate;
+    args.keyword = msg.content ? msg.content : 'ibm';
+    if (msg.startYear && msg.startMonth && msg.startDay) {
+      startDate = new Date(msg.startYear +"-"+ msg.startMonth +"-"+ msg.startDay);
+    }
+    if (msg.endYear && msg.endMonth && msg.endDay) {
+      endDate = new Date(msg.endYear +"-"+ msg.endMonth +"-"+ msg.endDay);
+    }
+
+    if (startDate && startDate.toString() !== "Invalid Date") {
+      args.startTime = startDate;
+    }
+    if (endDate && endDate.toString() !== "Invalid Date") {
+      args.endTime = endDate;
+    }
+
+    googleTrends.relatedTopics(args)
     .then(function(result){
       var respData = [];
       var data = JSON.parse(result).default.rankedList[1].rankedKeyword;
@@ -30,15 +36,4 @@ module.exports = function(Gtrends) {
       cb(null, err);
     });
   };
-
-  Gtrends.findOne = function(param, cb) {
-    cb(null, "findOne" + param);
-  };
-
-  Gtrends.remoteMethod('find', {
-    http: {path: '/Gtrends', verb: 'get'},
-    accepts: {arg: 'msg', type: 'string'},
-    returns: {arg: 'greeting', type: 'string'}
-  });
-
 };
