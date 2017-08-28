@@ -49,7 +49,7 @@ module.exports = function(Gtrends) {
         respData.push({"description" : data[i].topic.title + " - " + data[i].topic.type, "title" : data[i].topic.type, "location" : "item", "link" : data[i].link, "date" : "2012-11-03T07:00:00"});
         respData.push({"description" : data[i].formattedValue, "title" : data[i].topic.type, "location" : "raising", "link" : data[i].link, "date" : "2012-11-03T07:00:00"});
       }
-      cb(null, result);
+      cb(null, respData);
     })
     .catch(function(err){
       cb(null, err);
