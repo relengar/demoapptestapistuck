@@ -1,9 +1,7 @@
 {
   "name": "loopback-example-app",
   "version": "4.2.0",
-  "engines": {
-    "node": "7.10.0"
-  },
+  
   "description": "LoopBack Example Application",
   "main": "server/server.js",
   "dependencies": {
