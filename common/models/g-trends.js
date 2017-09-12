@@ -1,5 +1,3 @@
-'use strict';
-
 const googleTrends = require('google-trends-api');
 const setArgs = (params) => {
   let args = {};
@@ -29,8 +27,8 @@ const parseDate = (year, month, day, type) => {
   }
 };
 
-module.exports = function(Gtrends) {
-  Gtrends.find = function(msg, cb) {
+module.exports = (Gtrends) => {
+  Gtrends.find = (msg, cb)  =>{
     let args = {};
     if (msg) {
       args = setArgs(msg);
@@ -42,17 +40,55 @@ module.exports = function(Gtrends) {
     }
 
     googleTrends.relatedTopics(args)
-    .then(function(result){
-      var respData = [];
-      var data = JSON.parse(result).default.rankedList[1].rankedKeyword;
-      for (var i = 0; i < data.length; i++) {
+    .then((result) =>{
+      let respData = [];
+      let data = JSON.parse(result).default.rankedList[1].rankedKeyword;
+      for (let i = 0; i < data.length; i++) {
         respData.push({"description" : data[i].topic.title + " - " + data[i].topic.type, "title" : data[i].topic.type, "location" : "item", "link" : data[i].link, "date" : "2012-11-03T07:00:00"});
         respData.push({"description" : data[i].formattedValue, "title" : data[i].topic.type, "location" : "raising", "link" : data[i].link, "date" : "2012-11-03T07:00:00"});
       }
       cb(null, respData);
     })
-    .catch(function(err){
+    .catch((err) =>{
       cb(null, err);
     });
   };
+
+  Gtrends.getDataforChart = (data, cb) => {
+    // works on postman set header params to data
+    data = data ? data : "ibm";
+    let args = {
+      'keyword': data
+    };
+
+    googleTrends.interestOverTime(args)
+    .then((result) => {
+      let resp = JSON.parse(result).default.timelineData;
+      let respData = [];
+      for (let i = 0; i < resp.length; i++) {
+        respData.push({"xAxis": resp[i].value[0], "yAxis": resp[i].time, "timeLabel" : resp[i].formattedTime});
+      }
+      cb(null, respData);
+    })
+    .catch((err) => {
+      cb(null, err);
+    })
+  };
+
+  Gtrends.remoteMethod(
+    'getDataforChart', {
+      http: {
+        path: '/chart',
+        verb: 'get'
+      },
+      accepts: {
+        arg: 'params',
+        type: 'string'
+      },
+      returns: {
+        arg: 'data',
+        type: 'string'
+      }
+    }
+  );
 };
