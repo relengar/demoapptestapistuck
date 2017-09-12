@@ -35,8 +35,6 @@ module.exports = (Gtrends) => {
     }
     else {
       args.keyword = 'ibm';
-      args.startTime = parseDate(msg, msg, msg, "start");
-      args.endTime = parseDate(msg, msg, msg, "end");
     }
 
     googleTrends.relatedTopics(args)
@@ -55,18 +53,19 @@ module.exports = (Gtrends) => {
   };
 
   Gtrends.getDataforChart = (data, cb) => {
-    // works on postman set header params to data
-    data = data ? data : "ibm";
     let args = {
-      'keyword': data
+      'keyword': 'ibm'
     };
+    if (data) {
+      args = setArgs(data);
+    }
 
     googleTrends.interestOverTime(args)
     .then((result) => {
       let resp = JSON.parse(result).default.timelineData;
       let respData = [];
       for (let i = 0; i < resp.length; i++) {
-        respData.push({"xAxis": resp[i].value[0], "yAxis": resp[i].time, "timeLabel" : resp[i].formattedTime});
+        respData.push({"value": resp[i].value[0], "time": resp[i].time, "timeLabel" : resp[i].formattedTime});
       }
       cb(null, respData);
     })
