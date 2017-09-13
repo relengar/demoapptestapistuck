@@ -52,13 +52,18 @@ module.exports = (Gtrends) => {
     });
   };
 
-  Gtrends.getDataforChart = (data, cb) => {
-    let args = {
-      'keyword': 'ibm'
+  Gtrends.getDataforChart = (keyword, startYear, startMonth, startDay, endYear, endMonth, endDay, cb) => {
+    let req = {
+      'keyword': keyword,
+      'startYear': startYear,
+      'startMonth' : startMonth,
+      'startDay' : startDay,
+      'endYear' : endYear,
+      'endMonth' : endMonth,
+      'endDay' : endDay
     };
-    if (data) {
-      args = setArgs(data);
-    }
+    let args = setArgs(req);
+
 
     googleTrends.interestOverTime(args)
     .then((result) => {
@@ -80,10 +85,36 @@ module.exports = (Gtrends) => {
         path: '/chart',
         verb: 'get'
       },
-      accepts: {
-        arg: 'params',
-        type: 'string'
-      },
+      accepts: [
+        {
+          arg: 'keyword',
+          type: 'string'
+        },
+        {
+          arg: 'startYear',
+          type: 'string'
+        },
+        {
+          arg: 'startMonth',
+          type: 'string'
+        },
+        {
+          arg: 'startDay',
+          type: 'string'
+        },
+        {
+          arg: 'endYear',
+          type: 'string'
+        },
+        {
+          arg: 'endMonth',
+          type: 'string'
+        },
+        {
+          arg: 'endDay',
+          type: 'string'
+        }
+      ],
       returns: {
         arg: 'data',
         type: 'string'
