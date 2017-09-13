@@ -21,21 +21,6 @@
     "dataSource": "db",
     "public": false
   },
-  "Car": {
-    "dataSource": "db"
-  },
-  "Customer": {
-    "dataSource": "db"
-  },
-  "Inventory": {
-    "dataSource": "db"
-  },
-  "Location": {
-    "dataSource": "db"
-  },
-  "Note": {
-    "dataSource": "db"
-  },
   "gTrends": {
     "dataSource": null,
     "public": true

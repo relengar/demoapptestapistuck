@@ -25,11 +25,6 @@
     "text-table": "~0.2.0",
     "weighted": "~0.2.2"
   },
-  "optionalDependencies": {
-    "loopback-connector-mysql": "^1.2.1",
-    "loopback-connector-mongodb": "^1.2.5",
-    "loopback-connector-oracle": "^3.2.0"
-  },
   "devDependencies": {
     "jshint": "^2.7.0",
     "mocha": "^1.20.1",
