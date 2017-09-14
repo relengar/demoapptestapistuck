@@ -70,7 +70,7 @@ module.exports = (Gtrends) => {
       let resp = JSON.parse(result).default.timelineData;
       let respData = [];
       for (let i = 0; i < resp.length; i++) {
-        respData.push({"value": resp[i].value[0], "time": resp[i].time, "timeLabel" : resp[i].formattedTime});
+        respData.push({"value": resp[i].value[0], "time": resp[i].time, "timeLabel" : resp[i].formattedAxisTime});
       }
       cb(null, respData);
     })
